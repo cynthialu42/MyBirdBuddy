@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import { fetchBreed } from '../actions';
 
 class Quiz extends Component {
 
     renderRadioButton(field){
+        //console.log("field", field)
         return(
             <div>
                 <label>{field.label}</label>
@@ -12,7 +15,10 @@ class Quiz extends Component {
         )
     }
     onSubmit(values){
-        console.log(values);
+        console.log(values.breed);
+        this.props.fetchBreed(values.breed,()=>{
+            this.props.history.push(`/profile/${values.breed}`);
+        });
     }
     render(){
         const {handleSubmit} = this.props;
@@ -21,16 +27,10 @@ class Quiz extends Component {
                 <h1>Welcome to the Quiz</h1>
                 <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                     <fieldset>
+                        <Field name="breed" label="Cockatiel" component = {this.renderRadioButton} type="radio" value="cockatiel"/>
+                        <Field name="breed" label="Budgie" component = {this.renderRadioButton} type="radio" value="budgie"/>
+                        <Field name="breed" label="Macaw" component = {this.renderRadioButton} type="radio" value="macaw"/>
 
-                        {/* <div>
-                            <input type="radio" id = "cockatiel" name = "breed" value="Cockatiel"/>
-                            <label htmlFor="cockatiel">Cockatiel</label>
-                        </div>
-                        <div>
-                            <input type="radio" id = "budgie" name = "breed" value="Budgie / Budgerigar"/>
-                            <label htmlFor="budgie">Budgie</label>
-                        </div> */}
-                        <Field name="breed" label="Cockatiel" component = {this.renderRadioButton} type="radio" value="Cockatiel"/>
                     </fieldset>
 
                     <div>
@@ -45,4 +45,6 @@ class Quiz extends Component {
 
 export default reduxForm({
     form:'Quiz'
-})(Quiz);
+})(
+    connect(null, {fetchBreed})(Quiz)
+);

@@ -1,8 +1,18 @@
-export const TEST = 'TEST';
+export const BREED = 'BREED';
+export const SHOW_BIRD = 'SHOW_BIRD';
 
-export function test(){
+export function fetchBreed(breed,callback){
+    callback();
+    console.log('actions', breed);
     return{
-        type: TEST,
-        payload: "Hi"
+        type: BREED,
+        payload: breed
+    }
+}
+
+export function showBird(birdData){
+    return{
+        type: SHOW_BIRD,
+        payload: birdData
     }
 }

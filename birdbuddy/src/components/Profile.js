@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { showBird } from '../actions';
 
 class Profile extends Component {
     render(){
+        console.log('Profile results: ',this.props.results);
         return(
-            <div>Profile</div>
+            <div>{this.props.results.breed}</div>
         )
     }
 }
 
-export default Profile;
+function mapStateToProps({ results }){
+    return {results};
+}
+export default connect(mapStateToProps, { showBird})(Profile);
